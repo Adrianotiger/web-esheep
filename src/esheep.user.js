@@ -5,6 +5,11 @@
 // @description  Add a sheep on your Google and Bing page!
 // @author       Adriano
 // @include      http*://*.google.com/*
+// @include      http*://*.google.ch/*
+// @include      http*://*.google.it/*
+// @include      http*://*.google.de/*
+// @include      http*://*.google.at/*
+// @include      http*://*.google.co.uk/*
 // @include      http*://*.google.com.*/*
 // @include      http*://*.bing.com/*
 // @include      http*://*.bing.com.*/*
