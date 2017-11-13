@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         web eSheep
 // @namespace    http://esheep.petrucci.ch/
-// @version      0.2
+// @version      0.3
 // @description  Add a sheep on your Google and Bing page!
 // @author       Adriano
 // @include      http*://*.google.*/*
-// @include      http*://*.google.com.*/*
-// @include      http*://*.bing.com/*
-// @include      http*://*.bing.com.*/*
+// @include      http*://*.bing.*/*
+// @icon         http://esheep.petrucci.ch/favicon.gif
 // @grant        none
 // ==/UserScript==
 
