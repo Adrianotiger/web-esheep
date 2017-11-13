@@ -4,13 +4,18 @@ After a [C# project](https://github.com/Adrianotiger/desktopPet/) to see it agai
 It is only a script to import, so it is really simple to implement in your page. You have to write this to see the pet walking around your page:
 `<script>var sheep = new eSheep(); sheep.Start(); </script>`
 
-I wrote a demo:
+### And now?
+Check out a demo, to see how integrate it in your webpage:
 [https://adrianotiger.github.io/web-esheep/samples/demo1.html](https://adrianotiger.github.io/web-esheep/samples/demo1.html)
 
 If you want create your animation, you can use the editor or find some other already-created animations on my webpage: [ehseep.petrucci.ch](http://esheep.petrucci.ch)
 
-###Browser limits
+#### Tampermonkey script
+Do you have Firefox, Chrome, Opera or Edge? Add this sheep to Google and Bing search machines over this simple Tampermonkey script:
+[esheep.user.js](https://adrianotiger.github.io/web-esheep/src/esheep.user.js)
+
+### Browser limits
 The most recent browsers doesn't allows cross requests over Javascript. So the script and the animation xml have to be on the same server. If you want load an xml from esheep, you have to insert the php script instead of the xml (it will create some special headers, so that the xml will be loaded).
 
-###Credits
+### Credits
 **Tatsutoshi Nomura** is the creator of the esheep and designed it for Fuji Television. This is only a copy, using some images found in the web.
