@@ -1,9 +1,23 @@
+
 # web eSheep
 Can you remember the nice sheep from the '90 years?<br />[![eSheep for 64bit systems](https://img.youtube.com/vi/xN90p16tKGE/0.jpg)](https://www.youtube.com/watch?v=xN90p16tKGE)
 
 After a [C# project](https://github.com/Adrianotiger/desktopPet/) to see it again on Windows 64 bits, I wrote a simple script to see it again on the webpages.<br/>
 It is only a script to import, so it is really simple to implement in your page. You have to write this to see the pet walking around your page:
-`<script>var sheep = new eSheep(); sheep.Start(); </script>`
+```javascript
+<head>
+...
+<script src="https://adrianotiger.github.io/web-esheep/src/esheep.js"></script>
+</head>
+<body>
+...
+<script>
+var sheep = new eSheep(); 
+sheep.Start(); 
+</script>
+</body>
+```
+
 
 ### And now?
 Check out the demo, to see how integrate it in your webpage:
@@ -20,3 +34,4 @@ The most recent browsers doesn't allows cross requests over Javascript. So the s
 
 ### Credits
 **Tatsutoshi Nomura** is the creator of the esheep and designed it for Fuji Television. This is only a copy, using some images found in the web.
+
