@@ -1,12 +1,13 @@
 # web eSheep
 Can you remember the nice sheep from the '90 years?<br />[![eSheep for 64bit systems](https://img.youtube.com/vi/xN90p16tKGE/0.jpg)](https://www.youtube.com/watch?v=xN90p16tKGE)
+
 After a [C# project](https://github.com/Adrianotiger/desktopPet/) to see it again on Windows 64 bits, I wrote a simple script to see it again on the webpages.<br/>
 It is only a script to import, so it is really simple to implement in your page. You have to write this to see the pet walking around your page:
 `<script>var sheep = new eSheep(); sheep.Start(); </script>`
 
 ### And now?
-Check out a demo, to see how integrate it in your webpage:
-[https://adrianotiger.github.io/web-esheep/samples/demo1.html](https://adrianotiger.github.io/web-esheep/samples/demo1.html)
+Check out the demo, to see how integrate it in your webpage:
+[https://adrianotiger.github.io/web-esheep/samples/](https://adrianotiger.github.io/web-esheep/samples/)
 
 If you want create your animation, you can use the editor or find some other already-created animations on my webpage: [ehseep.petrucci.ch](http://esheep.petrucci.ch)
 
