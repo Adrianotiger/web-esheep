@@ -8,7 +8,7 @@
  * Author:
  *                Adriano Petrucci (http://esheep.petrucci.ch)
  * 
- * Version:       0.6
+ * Version:       0.7
  * 
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
@@ -36,96 +36,124 @@
  *                Tested on IE11, Edge and Opera 
  * 
  * Changelog:
- *                Version 0.6 - 13.11.2017:
+ *                Version 0.7 - 13.11.2017:
  *                  - better Javascript structure
  *                  - GitHub version (https://github.com/Adrianotiger/web-esheep)
+ *                  - Childs animations added
+ *                  - Better comments
+ *                  - Replaced alerts with console.error
  *                Version 0.5 - 12.07.2017:
  *                  - animations starts only once the image was loaded (thanks RedSparr0w)
  *                Version 0.x:
  *                  - still beta versions...
  */
 
-var DesktopPetVersion = '0.6';
+const VERSION = '0.7';                // web eSheep version
+const ACTIVATE_DEBUG = false;         // show log on console
+const DEFAULT_XML = "http://esheep.petrucci.ch/script/animation.php"; // default XML animation
+const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
 
+  /*
+   * Old style, don't use it.
+   */
 class DesktopPet
 {
   start_esheep()
   {
-    alert("Deprecated, use new x=eSheep and x.Start() to start new eSheep.");
+    console.error("Deprecated, use new x=eSheep and x.Start() to start new eSheep.");
   }
 }
   
+  /*
+   * eSheep class.
+   * Create a new class of this type if you want a new pet. Will create the components for the pet.
+   * Once created, you can call [variableName].Start() to start the animation with your desired pet. 
+   */
 class eSheep
 {
-  constructor()
+  constructor(isChild)
   {    
-    this.DOMdiv = document.createElement("div");
-    this.DOMimg = document.createElement("img");
-    this.DOMinfo = document.createElement("div");
+      // CORS: Cross calls are not accepted by new browsers. 
+      // This PHP-script allows to call the page also from other domains 
+    this.animationFile = DEFAULT_XML;
     
-    this.parser = new DOMParser();
-    this.xmlDoc = null;
+    this.DOMdiv = document.createElement("div");    // Div added to webpage, containing the sheep
+    this.DOMimg = document.createElement("img");    // Tile image, will be positioned inside the div
+    this.DOMinfo = document.createElement("div");   // about dialog, if you press on the sheep
     
-    this.tilesX = 1;
-    this.tilesY = 1;
-    this.imageW = 1;
-    this.imageH = 1;
-    this.imageX = 1;
-    this.imageY = 1;
-    this.flipped = false;
-    this.dragging = false;
-    this.infobox = false;
-    this.animationId = 0;
-    this.animationStep = 0;
-    this.animationNode = null;
-    this.sprite = new Image();
-    this.HTMLelement = null;
-    this.randS = Math.random() * 100;
+    this.parser = new DOMParser();                  // XML parser
+    this.xmlDoc = null;                             // parsed XML Document 
+    
+    this.isChild = (isChild != null);               // Child will be removed once they reached the end
+    
+    this.tilesX = 1;                                // Quantity of images inside Tile
+    this.tilesY = 1;                                // Quantity of images inside Tile
+    this.imageW = 1;                                // Width of the sprite image
+    this.imageH = 1;                                // Height of the sprite image
+    this.imageX = 1;                                // Position of sprite inside webpage
+    this.imageY = 1;                                // Position of sprite inside webpage
+    this.flipped = false;                           // if sprite is flipped
+    this.dragging = false;                          // if user is dragging the sheep
+    this.infobox = false;                           // if infobox is visible
+    this.animationId = 0;                           // current animation ID
+    this.animationStep = 0;                         // current animation step
+    this.animationNode = null;                      // current animation DOM node
+    this.sprite = new Image();                      // sprite image (Tiles)
+    this.HTMLelement = null;                        // the HTML element where the pet is walking on
+    this.randS = Math.random() * 100;               // random value, will change when page is reloaded
     
     this.screenW = window.innerWidth
                   || document.documentElement.clientWidth
-                  || document.body.clientWidth;
+                  || document.body.clientWidth;     // window width
   
     this.screenH = window.innerHeight
                   || document.documentElement.clientHeight
-                  || document.body.clientHeight;
+                  || document.body.clientHeight;    // window height
   }
     
+    /*
+     * Start new animation on the page.
+     * if animation is not set, the default sheep will be taken
+     */
   Start(animation)
   {
-    animation = typeof animation !== 'undefined' ? animation : "http://esheep.petrucci.ch/script/animation.php";
+    if(typeof animation !== 'undefined' &&
+      animation != null)
+    {
+      this.animationFile = animation; 
+    }
   
     var ajax = new XMLHttpRequest();
     var sheepClass = this;
         
-    ajax.open("GET", animation, true);
-    ajax.onreadystatechange = function()
-    {
+    ajax.open("GET", this.animationFile, true);
+    ajax.addEventListener("readystatechange", function() {
       if(this.readyState == 4)
       {
         if(this.status == 200)
-        {
+            // successfully loaded XML, parse it and create first esheep.
           sheepClass._parseXML(this.responseText);
-          sheepClass._spawnESheep();
-        }
-        else{
-          alert("XML not available:" + this.statusText);
-        }
+        else
+          console.error("XML not available:" + this.statusText + "\n" + this.responseText);
       }
-    }
+    });
     ajax.send(null);
   }
   
+    /*
+     * Parse loaded XML, contains spawn, animations and childs
+     */
   _parseXML(text)
   {
     this.xmlDoc = this.parser.parseFromString(text,'text/xml');
     var image = this.xmlDoc.getElementsByTagName('image')[0]; 
     this.tilesX = image.getElementsByTagName("tilesx")[0].textContent;
     this.tilesY = image.getElementsByTagName("tilesy")[0].textContent;
-    //this.sprite.src = 'data:image/png;base64,data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg==';
+      // Event listener: Sprite was loaded =>
+      //   play animation only when the sprite is loaded
     this.sprite.addEventListener("load", function(e) 
     {
-      //console.log("image loaded");
+      if(ACTIVATE_DEBUG) console.log("Sprite image loaded");
       var attribute = 
       "width:" + (this.sprite.width) + "px;" +
       "height:" + (this.sprite.height) + "px;" +
@@ -133,11 +161,12 @@ class eSheep
       "top:0px;" + 
       "left:0px;";
       this.DOMimg.setAttribute("style", attribute);
-      this.DOMimg.ondragstart = function() { return false; };
+        // prevent to move image (will show the entire sprite sheet if not catched)
+      this.DOMimg.addEventListener("dragstart", function(e){e.preventDefault(); return false;});
       this.imageW = this.sprite.width / this.tilesX;
       this.imageH = this.sprite.height / this.tilesY;
-      this.imageX = 0;
-      this.imageY = this.screenH - this.sprite.height / this.tilesY;
+      //if(typeof this.imageX == 'undefined') this.imageX = 0;
+      //if(typeof this.imageY == 'undefined') this.imageY = this.screenH - this.sprite.height / this.tilesY;
       attribute = 
         "width:" + (this.imageW) + "px;" +
         "height:" + (this.imageH) + "px;" +
@@ -150,11 +179,18 @@ class eSheep
         "overflow:hidden;"; 
       this.DOMdiv.setAttribute("style", attribute);
       this.DOMdiv.appendChild(this.DOMimg);
+      
+      if(this.isChild)
+        this._spawnChild();
+      else
+        this._spawnESheep();
     }.bind(this));
 
+    
     this.sprite.src = 'data:image/png;base64,' + image.getElementsByTagName("png")[0].textContent;
     this.DOMimg.setAttribute("src", this.sprite.src);
     
+    // Mouse move over eSheep, check if eSheep should be moved over the screen
     this.DOMdiv.addEventListener("mousemove", function(e)
     {
       if(!this.dragging && e.buttons==1 && e.button==0)
@@ -175,17 +211,19 @@ class eSheep
         }
       }
     }.bind(this)); 
+    // Add event listener to body, if mouse moved too fast over the dragging eSheep
     document.body.addEventListener("mousemove", function(e)
     {
       if(this.dragging)
       {
         this.imageX = parseInt(e.clientX) - this.imageW/2;
         this.imageY = parseInt(e.clientY) - this.imageH/2;
+        
         this.DOMdiv.style.left = this.imageX + "px";
         this.DOMdiv.style.top = this.imageY + "px";
       }
     }.bind(this)); 
-    
+    // Window resized, recalculate eSheep bounds
     document.body.addEventListener("resize", function(e)
     {
       this.screenW = window.innerWidth
@@ -207,12 +245,12 @@ class eSheep
         this.DOMdiv.style.left = this.imageX + "px";
       }
     }.bind(this)); 
-    
+    // Don't allow contextmenu over the sheep
     this.DOMdiv.addEventListener("contextmenu", function(e) {
       e.preventDefault();
       return false;
     });
-    
+    // Mouse released
     this.DOMdiv.addEventListener("mouseup", function(e) {
       if(this.dragging)
       {
@@ -231,12 +269,12 @@ class eSheep
         this.infobox = true;
       }
     }.bind(this));
-    
+    // Mouse released over the info box
     this.DOMinfo.addEventListener("mouseup", function(e) {
       this.DOMinfo.style.display = "none";
       this.infobox = false;
     }.bind(this));
-    
+      // Create About box
     var attribute =
       "width:200px;" +
       "height:100px;" +
@@ -248,23 +286,45 @@ class eSheep
       "border-style:ridge;" +
       "border-color:#0000ab;" +
       "text-align:center;" +
+      "text-shadow: 1px 1px 3px #ffff88;" + 
+      "box-shadow: 3px 3px 10px #888888;" + 
       "color:black;" +
       "opacity:0.9;" + 
       "z-index:9999;" +
       "overflow:auto;" + 
       "background: linear-gradient(to bottom right, rgba(128,128,255,0.7), rgba(200,200,255,0.4));";
     this.DOMinfo.setAttribute("style",attribute);
-    this.DOMinfo.innerHTML = "<b>eSheep</b><sup style='float:right;'>ver: " + DesktopPetVersion + "</sup><br><hr>Visit the home page of this lovely sheep:<br><a href='http://esheep.petrucci.ch' target='_blank'>http://esheep.petrucci.ch</a>";
+    var htmlT = document.createElement("b").appendChild(document.createTextNode("eSheep"));
+    var htmlV = document.createElement("sup");
+    var htmlL = document.createElement("a");
+    htmlV.appendChild(document.createTextNode("ver: " + VERSION));
+    htmlV.setAttribute("style", "float:right");
+    htmlL.appendChild(document.createTextNode("http://esheep.petrucci.ch"));
+    htmlL.setAttribute("href", "http://esheep.petrucci.ch");
+    htmlL.setAttribute("target", "_blank");
+    this.DOMinfo.appendChild(htmlT);
+    this.DOMinfo.appendChild(htmlV);
+    this.DOMinfo.appendChild(document.createElement("br"));
+    this.DOMinfo.appendChild(document.createElement("hr"));
+    this.DOMinfo.appendChild(document.createTextNode("Visit the home page of this lovely sheep:"));
+    this.DOMinfo.appendChild(document.createElement("br"));
+    this.DOMinfo.appendChild(htmlL);
+      // Add about and sheep elements to the body
     document.body.appendChild(this.DOMinfo);
     document.body.appendChild(this.DOMdiv);
   };
   
+    /*
+     * Set new position for the pet
+     * If absolute is true, the x and y coordinates are used as absolute values.
+     * If false, x and y are added to the current position
+     */
   _setPosition(x, y, absolute)
   {
     if(absolute)
-    {      
-      this.imageX = x;
-      this.imageY = y;
+    { 
+      this.imageX = parseInt(x);
+      this.imageY = parseInt(y);
     }
     else
     {
@@ -276,6 +336,9 @@ class eSheep
     this.DOMdiv.style.top = this.imageY + "px"; 
   }
   
+    /* 
+     * Spawn new esheep, this is called if the XML was loaded successfully
+     */
   _spawnESheep()
   {
     var spawnsRoot = this.xmlDoc.getElementsByTagName('spawns')[0];
@@ -288,13 +351,14 @@ class eSheep
     for(i=0;i<spawns.length;i++)
     {
       prob += parseInt(spawns[i].getAttribute("probability"));
-      if(prob >= rand)
+      if(prob >= rand || i == spawns.length-1)
       {
         this._setPosition(
           this._parseKeyWords(spawns[i].getElementsByTagName('x')[0].textContent), 
           this._parseKeyWords(spawns[i].getElementsByTagName('y')[0].textContent),
           true
         ); 
+        if(ACTIVATE_DEBUG) console.log("Spawn: " + this.imageX + ", " + this.imageY);
         this.animationId = spawns[i].getElementsByTagName('next')[0].textContent;
         this.animationStep = 0;
         var childsRoot = this.xmlDoc.getElementsByTagName('animations')[0];
@@ -304,15 +368,54 @@ class eSheep
           if(childs[k].getAttribute("id") == this.animationId)
           {
             this.animationNode = childs[k];
+            
+              // Check if child should be loaded toghether with this animation
+            var childsRoot = this.xmlDoc.getElementsByTagName('childs')[0];
+            var childs = childsRoot.getElementsByTagName('child');
+            for(var j=0;j<childs.length;j++)
+            {
+              if(childs[j].getAttribute("animationid") == this.animationId)
+              {
+                if(ACTIVATE_DEBUG) console.log("Child from Spawn");
+                var eSheepChild = new eSheep(true);
+                eSheepChild.animationId = childs[j].getElementsByTagName('next')[0].textContent;
+                var x = childs[j].getElementsByTagName('x')[0].textContent;//
+                var y = childs[j].getElementsByTagName('y')[0].textContent;
+                eSheepChild._setPosition(this._parseKeyWords(x), this._parseKeyWords(y), true);
+                // Start animation
+                eSheepChild.Start(this.animationFile);
+                break;
+              }
+            }
             break;
           }
         }
         break;
       }
     }
+      // Play next step
     this._nextESheepStep();
   }
   
+    /*
+     * Like spawnESheep, but for Childs
+     */
+  _spawnChild()
+  {
+    var childsRoot = this.xmlDoc.getElementsByTagName('animations')[0];
+    var childs = childsRoot.getElementsByTagName('animation');
+    for(var k=0;k<childs.length;k++)
+    {
+      if(childs[k].getAttribute("id") == this.animationId)
+      {
+        this.animationNode = childs[k];
+        break;
+      }
+    }
+    this._nextESheepStep();
+  }
+  
+    // Parse the human readable expression from XML to a computer readable expression
   _parseKeyWords(value)
   {
     value = value.replace(/screenW/g, this.screenW); 
@@ -323,19 +426,49 @@ class eSheep
     value = value.replace(/imageH/g, this.imageH); 
     value = value.replace(/random/g, Math.random()*100);
     value = value.replace(/randS/g, this.randS);
-    return eval(value);
+    value = value.replace(/imageX/g, this.imageX);
+    value = value.replace(/imageY/g, this.imageY);
+    
+    var ret = 0;
+    try
+    {
+      ret = eval(value);
+    }
+    catch(err)
+    {
+      console.error("Unable to parse this position: \n'" + value + "'\n Error message: \n" + err.message);
+    }
+    return ret;
   }
     
+    /*
+     * Once the animation is over, get the next animation to play
+     */
   _getNextRandomNode(parentNode)
   {
     var baseNode = parentNode.getElementsByTagName('next');
     var childsRoot = this.xmlDoc.getElementsByTagName('animations')[0];
     var childs = childsRoot.getElementsByTagName('animation');
     var prob = 0;
+    var nodeFound = false;
     
+      // no more animations (it was the last one)
     if(baseNode.length == 0)
     {
-      this._spawnESheep();
+        // If it is a child, remove the child from document
+      if(this.isChild)
+      {
+        // remove child
+        if(ACTIVATE_DEBUG) console.log("Remove child");
+        document.body.removeChild(this.DOMinfo);
+        document.body.removeChild(this.DOMdiv);
+        delete this;
+      }
+        // else, spawn sheep again
+      else
+      {
+        this._spawnESheep();
+      }
       return false;
     }
         
@@ -362,53 +495,71 @@ class eSheep
         this.animationId = childs[k].getAttribute("id");
         this.animationStep = 0;
         this.animationNode = childs[k];
-        return true;
+        nodeFound = true;
+        break;
       }
     }
-    return false;
+    
+    if(nodeFound) // create Child, if present
+    {
+      var childsRoot = this.xmlDoc.getElementsByTagName('childs')[0];
+      var childs = childsRoot.getElementsByTagName('child');
+      for(k=0;k<childs.length;k++)
+      {
+        if(childs[k].getAttribute("animationid") == this.animationId)
+        {
+          if(ACTIVATE_DEBUG) console.log("Child from Animation");
+          var eSheepChild = new eSheep(true);
+          eSheepChild.animationId = childs[k].getElementsByTagName('next')[0].textContent;
+          var x = childs[k].getElementsByTagName('x')[0].textContent;//
+          var y = childs[k].getElementsByTagName('y')[0].textContent;
+          eSheepChild._setPosition(this._parseKeyWords(x), this._parseKeyWords(y), true);
+          eSheepChild.Start(this.animationFile);
+          break;
+        }
+      }
+    }
+    
+    return nodeFound;
   }
 
+    /*
+     * Check if sheep is walking over a defined HTML TAG-element 
+     */
   _checkOverlapping()
-  {
-    var divs = document.body.getElementsByTagName('div');
-    var hrs = document.body.getElementsByTagName('hr');
-    
+  {    
     var x = this.imageX;
     var y = this.imageY + this.imageH;
     var rect;
     var margin = 20;
     if(this.HTMLelement) margin = 5;
-    for(var i=0;i<divs.length;i++)
+    for(var index in COLLISION_WITH)
     {
-      rect = divs[i].getBoundingClientRect();
-  
-      if(y > rect.top - 2 && y < rect.top + margin)
+      var els = document.body.getElementsByTagName(COLLISION_WITH[index]);
+      
+      for(var i=0;i<els.length;i++)
       {
-        if(x > rect.left && x < rect.right - this.imageW)
+        rect = els[i].getBoundingClientRect();
+    
+        if(y > rect.top - 2 && y < rect.top + margin)
         {
-          var style = window.getComputedStyle(divs[i]);
-          if((style.borderTopStyle != "" && style.borderTopStyle != "none") && style.display != "none")
+          if(x > rect.left && x < rect.right - this.imageW)
           {
-            return divs[i];
+            var style = window.getComputedStyle(els[i]);
+            if((style.borderTopStyle != "" && style.borderTopStyle != "none") && style.display != "none")
+            {
+              return els[i];
+            }
           }
-        }
-      }
-    }
-    for(i=0;i<hrs.length;i++)
-    {
-      rect = hrs[i].getBoundingClientRect();
-  
-      if(y > rect.top - 2 && y < rect.top + margin)
-      {
-        if(x > rect.left && x < rect.right - this.imageW)
-        {
-          return hrs[i];
         }
       }
     }
     return false;
   }
   
+    /*
+     * Try to get the value of a node (from the current animationNode), if it is not possible returns the defaultValue
+     */
   _getNodeValue(nodeName, valueName, defaultValue)
   {
     if(!this.animationNode || !this.animationNode.getElementsByTagName(nodeName)) return;
@@ -424,6 +575,9 @@ class eSheep
     }
   }
     
+    /*
+     * Next step (each frame is a step)
+     */
   _nextESheepStep()
   {
     var x1 = this._getNodeValue('start','x',0);
@@ -538,7 +692,7 @@ class eSheep
           if(this.imageY > this.imageH)
           {
             this.HTMLelement = this._checkOverlapping();
-            this.imageY = this.HTMLelement.getBoundingClientRect().top - this.imageH;
+            this.imageY = Math.ceil(this.HTMLelement.getBoundingClientRect().top) - this.imageH;
             setNext = true;
           }
         }
@@ -601,7 +755,8 @@ class eSheep
         this.imageY > this.screenH && y2 > 0)
       {
         setNext = true;
-        this._spawnESheep();
+        if(!this.isChild)
+          this._spawnESheep();
         return; 
       }
     }
@@ -609,8 +764,6 @@ class eSheep
     window.setTimeout(function(){this._nextESheepStep();}.bind(this), (parseInt(del1) + parseInt((del2-del1)*this.animationStep/steps)));             
   }
 };
-
-
 
 
 
