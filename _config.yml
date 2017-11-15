@@ -14,8 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Web eSheep
-description: >- Web based version of the eSheep (sheep walking on the desktop). 
-Add a sheep to your webpage using this simple script.
+description: Web based version of the eSheep (sheep walking on the desktop). Add a sheep to your webpage using this simple script.
 baseurl: "https://github.com/Adrianotiger/web-esheep" # the subpath of your site, e.g. /blog
 url: "http://esheep.petrucci.ch" # the base hostname & protocol for your site, e.g. http://example.com
 
