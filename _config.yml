@@ -15,14 +15,14 @@
 # in the templates via {{ site.myvariable }}.
 title: Web eSheep
 description: Web based version of the eSheep (sheep walking on the desktop). Add a sheep to your webpage using this simple script.
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "/web-esheep/" # the subpath of your site, e.g. /blog
 url: "http://esheep.petrucci.ch" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 markdown: kramdown
-theme: minima
-plugins:
-  - jekyll-feed
+#theme: minima
+#plugins:
+#  - jekyll-feed
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
