@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>eSheep Demo 1</title>
+    <script src="https://adrianotiger.github.io/web-esheep/src/esheep.js"></script>
+    <style>
+      // some styles to defines, if you want the pet on the entire height
+      html { height: 100% }
+      body { height: 100%; margin: 0px; }
+    </style>
+  </head>
+  <body style='text-align:center;margin:0 auto;'>
+    <h1>Demo1 - page for eSheep</h1>
+    
+    <!--object 1 on window, for esheep -->
+    <div style='height:200px;'>
+    </div>
+    
+    <!--object 2 on window, for esheep -->
+    <hr style='width:30%;'>
+    
+    <!--object 3 on window, for esheep -->
+    <hr style='width:30%;float:left;margin:80px;box-shadow:3px 3px 10px 3px #000044;'>
+    
+    <!--object 4 on window, for esheep -->
+    <div style='height:200px;width:400px;float:right;background-color:yellow;border-width:2px;border-style:solid;'>
+    </div>
+    
+    <script>
+      // You need only this 2 lines to create and show the sheep
+    var esheep = new eSheep();
+    esheep.Start("https://adrianotiger.github.io/web-esheep/src/animation.xml");
+    </script>
+    
+    <script>
+      // Add another sheep through the button
+    function addSheep()
+    {
+      var esheep2 = new eSheep();
+      esheep2.Start(); 
+    }
+    </script>
+    
+    <!-- Button to add another sheep -->
+    <button onclick="addSheep();">Add Sheep</button>
+    
+  </body>
+</html>
