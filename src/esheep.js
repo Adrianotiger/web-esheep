@@ -3,12 +3,12 @@
  *                eSheep - Webpage
  *
  * Date:
- *                13.november 2017
+ *                04.april 2018
  *
  * Author:
  *                Adriano Petrucci (http://esheep.petrucci.ch)
  *
- * Version:       0.7
+ * Version:       0.7.1
  *
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
