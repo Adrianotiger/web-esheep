@@ -25,6 +25,13 @@ Check out the demo, to see how integrate it in your webpage:
 
 If you want create your animation, you can use the editor or find some other already-created animations on my webpage: [ehseep.petrucci.ch](http://esheep.petrucci.ch)
 
+### Build
+eSheep uses `yarn` to build it.  
+#### Set up build environment  
+`yarn install --dev`  
+#### Build the files in `dist`
+`yarn build`
+
 #### Tampermonkey script
 Do you have Firefox, Chrome, Opera or Edge? Add this sheep to Google and Bing search machines over this simple Tampermonkey script:
 [esheep.user.js](https://adrianotiger.github.io/web-esheep/src/esheep.user.js)
