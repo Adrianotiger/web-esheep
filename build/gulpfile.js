@@ -5,7 +5,7 @@ let sourcemaps = require('gulp-sourcemaps');
 let uglify = require('gulp-uglify');
  
 gulp.task("build", function () {
-    return gulp.src('src/esheep.js')
+    return gulp.src('../src/esheep.js')
         .pipe(rename('esheep.min.js'))
         .pipe(babel({
             presets: ['es2015']
@@ -13,5 +13,5 @@ gulp.task("build", function () {
         .pipe(sourcemaps.init())
         .pipe(uglify())
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('../dist/'));
 });
