@@ -191,7 +191,7 @@ class eSheep
     this.DOMimg.setAttribute("src", this.sprite.src);
 
     // Mouse move over eSheep, check if eSheep should be moved over the screen
-    this.DOMdiv.addEventListener("mousemove", function(e)
+    this.DOMdiv.addEventListener("mousemove", e => 
     {
       if(!this.dragging && e.buttons==1 && e.button==0)
       {
@@ -210,9 +210,9 @@ class eSheep
           }
         }
       }
-    }.bind(this));
+    });
     // Add event listener to body, if mouse moved too fast over the dragging eSheep
-    document.body.addEventListener("mousemove", function(e)
+    document.body.addEventListener("mousemove", e => 
     {
       if(this.dragging)
       {
@@ -222,9 +222,9 @@ class eSheep
         this.DOMdiv.style.left = this.imageX + "px";
         this.DOMdiv.style.top = this.imageY + "px";
       }
-    }.bind(this));
+    });
     // Window resized, recalculate eSheep bounds
-    document.body.addEventListener("resize", function(e)
+    document.body.addEventListener("resize", () => 
     {
       this.screenW = window.innerWidth
                 || document.documentElement.clientWidth
@@ -244,7 +244,7 @@ class eSheep
         this.imageX = this.screenW - this.imageW;
         this.DOMdiv.style.left = this.imageX + "px";
       }
-    }.bind(this));
+    });
     // Don't allow contextmenu over the sheep
     this.DOMdiv.addEventListener("contextmenu", e => {
       e.preventDefault();
