@@ -56,17 +56,6 @@ const DEFAULT_XML = "http://esheep.petrucci.ch/script/animation.php"; // default
 const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
 
   /*
-   * Old style, don't use it.
-   */
-class DesktopPet
-{
-  start_esheep()
-  {
-    console.error("Deprecated, use new x=eSheep and x.Start() to start new eSheep.");
-  }
-}
-
-  /*
    * eSheep class.
    * Create a new class of this type if you want a new pet. Will create the components for the pet.
    * Once created, you can call [variableName].Start() to start the animation with your desired pet.
@@ -79,7 +68,10 @@ class eSheep
       // This PHP-script allows to call the page also from other domains
     this.animationFile = DEFAULT_XML;
 
+    this.id = Date.now() + Math.random();
+
     this.DOMdiv = document.createElement("div");    // Div added to webpage, containing the sheep
+    this.DOMdiv.setAttribute("id", this.id);
     this.DOMimg = document.createElement("img");    // Tile image, will be positioned inside the div
     this.DOMinfo = document.createElement("div");   // about dialog, if you press on the sheep
 
@@ -142,6 +134,11 @@ class eSheep
     ajax.send(null);
   }
 
+  remove() {
+    this.DOMdiv = this.DOMimg = this.DOMinfo = null;
+    document.getElementById(this.id).outerHTML='';
+  }
+
     /*
      * Parse loaded XML, contains spawn, animations and childs
      */
@@ -153,7 +150,7 @@ class eSheep
     this.tilesY = image.getElementsByTagName("tilesy")[0].textContent;
       // Event listener: Sprite was loaded =>
       //   play animation only when the sprite is loaded
-    this.sprite.addEventListener("load", function(e)
+    this.sprite.addEventListener("load", () =>
     {
       if(ACTIVATE_DEBUG) console.log("Sprite image loaded");
       var attribute =
@@ -165,7 +162,7 @@ class eSheep
       "max-width: none;";
       this.DOMimg.setAttribute("style", attribute);
         // prevent to move image (will show the entire sprite sheet if not catched)
-      this.DOMimg.addEventListener("dragstart", function(e){e.preventDefault(); return false;});
+      this.DOMimg.addEventListener("dragstart", e => {e.preventDefault(); return false;});
       this.imageW = this.sprite.width / this.tilesX;
       this.imageH = this.sprite.height / this.tilesY;
       //if(typeof this.imageX == 'undefined') this.imageX = 0;
@@ -187,14 +184,14 @@ class eSheep
         this._spawnChild();
       else
         this._spawnESheep();
-    }.bind(this));
+    });
 
 
     this.sprite.src = 'data:image/png;base64,' + image.getElementsByTagName("png")[0].textContent;
     this.DOMimg.setAttribute("src", this.sprite.src);
 
     // Mouse move over eSheep, check if eSheep should be moved over the screen
-    this.DOMdiv.addEventListener("mousemove", function(e)
+    this.DOMdiv.addEventListener("mousemove", e => 
     {
       if(!this.dragging && e.buttons==1 && e.button==0)
       {
@@ -213,9 +210,9 @@ class eSheep
           }
         }
       }
-    }.bind(this));
+    });
     // Add event listener to body, if mouse moved too fast over the dragging eSheep
-    document.body.addEventListener("mousemove", function(e)
+    document.body.addEventListener("mousemove", e => 
     {
       if(this.dragging)
       {
@@ -225,9 +222,9 @@ class eSheep
         this.DOMdiv.style.left = this.imageX + "px";
         this.DOMdiv.style.top = this.imageY + "px";
       }
-    }.bind(this));
+    });
     // Window resized, recalculate eSheep bounds
-    document.body.addEventListener("resize", function(e)
+    document.body.addEventListener("resize", () => 
     {
       this.screenW = window.innerWidth
                 || document.documentElement.clientWidth
@@ -247,14 +244,14 @@ class eSheep
         this.imageX = this.screenW - this.imageW;
         this.DOMdiv.style.left = this.imageX + "px";
       }
-    }.bind(this));
+    });
     // Don't allow contextmenu over the sheep
-    this.DOMdiv.addEventListener("contextmenu", function(e) {
+    this.DOMdiv.addEventListener("contextmenu", e => {
       e.preventDefault();
       return false;
     });
     // Mouse released
-    this.DOMdiv.addEventListener("mouseup", function(e) {
+    this.DOMdiv.addEventListener("mouseup", () => {
       if(this.dragging)
       {
         this.dragging = false;
@@ -271,12 +268,12 @@ class eSheep
         this.DOMinfo.style.display = "block";
         this.infobox = true;
       }
-    }.bind(this));
+    });
     // Mouse released over the info box
-    this.DOMinfo.addEventListener("mouseup", function(e) {
+    this.DOMinfo.addEventListener("mouseup", e => {
       this.DOMinfo.style.display = "none";
       this.infobox = false;
-    }.bind(this));
+    });
       // Create About box
     var attribute =
       "width:200px;" +
@@ -324,19 +321,20 @@ class eSheep
      */
   _setPosition(x, y, absolute)
   {
-    if(absolute)
-    {
-      this.imageX = parseInt(x);
-      this.imageY = parseInt(y);
+    if (this.DOMdiv) {
+      if(absolute)
+      {
+        this.imageX = parseInt(x);
+        this.imageY = parseInt(y);
+      }
+      else
+      {
+        this.imageX = parseInt(this.imageX) + parseInt(x);
+        this.imageY = parseInt(this.imageY) + parseInt(y);
+      }
+      this.DOMdiv.style.left = this.imageX + "px";
+      this.DOMdiv.style.top = this.imageY + "px";
     }
-    else
-    {
-      this.imageX = parseInt(this.imageX) + parseInt(x);
-      this.imageY = parseInt(this.imageY) + parseInt(y);
-    }
-
-    this.DOMdiv.style.left = this.imageX + "px";
-    this.DOMdiv.style.top = this.imageY + "px";
   }
 
     /*
@@ -617,7 +615,7 @@ class eSheep
     if(this.dragging || this.infobox)
     {
       this.animationStep++;
-      window.setTimeout(function(){this._nextESheepStep();}.bind(this), 50);
+      setTimeout(this._nextESheepStep.bind(this), 50);
       return;
     }
 
@@ -758,13 +756,17 @@ class eSheep
         this.imageY > this.screenH && y2 > 0)
       {
         setNext = true;
-        if(!this.isChild)
+        if(!this.isChild) {
           this._spawnESheep();
+        }
         return;
       }
     }
 
-    window.setTimeout(function(){this._nextESheepStep();}.bind(this), (parseInt(del1) + parseInt((del2-del1)*this.animationStep/steps)));
+    setTimeout(
+      this._nextESheepStep.bind(this),
+      parseInt(del1) + parseInt((del2 - del1) * this.animationStep / steps)
+    );
   }
 };
 

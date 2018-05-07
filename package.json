@@ -1,0 +1,21 @@
+{
+  "name": "web-esheep",
+  "version": "0.7.1",
+  "description": "Add a walking pet (sheep to your home page) with just a few lines of code! Will add a lovely sheep (stray sheep) and this will walk around your page and over all <hr>s and <div>s with a border. You can also select another animation, using your personal XML file or one from the database.",
+  "main": "index.js",
+  "repository": "git@github.com:kelvinau/web-esheep.git",
+  "author": "Kelvin Au <kelvinau4413@hotmail.com>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-es2015": "^6.24.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0"
+  },
+  "scripts": {
+    "build": "gulp build --gulpfile build/gulpfile.js"
+  }
+}
