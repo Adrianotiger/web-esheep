@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>eSheep Demo 2</title>
-    <script src="../dist/esheep.min.js"></script>
+    <script src="https://adrianotiger.github.io/web-esheep/dist/esheep.min.js"></script>
     <style>
       // some styles to defines, if you want the pet on the entire height
       html { height: 100% }
@@ -27,18 +27,13 @@
     </div>
     
     <script>
-      // You need only this 2 lines to create and show the sheep
-    var esheep = new eSheep();
-    esheep.Start();
-    </script>
-    
-    <script>
       // Add another sheep through the button
     function addSheep()
     {
       var esheep2 = new eSheep();
-      esheep2.Start(); 
+      esheep2.Start("https://adrianotiger.github.io/web-esheep/pets/original.xml"); 
     }
+    addSheep();
     </script>
     
     <!-- Button to add another sheep -->
