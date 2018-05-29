@@ -8,7 +8,7 @@
  * Author:
  *                Adriano Petrucci (http://esheep.petrucci.ch)
  *
- * Version:       0.7.1
+ * Version:       0.8.0
  *
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
@@ -24,11 +24,11 @@
  *
  * How to use:
  *                Add this line in your <header>:
- *                <script src="http://esheep.petrucci.ch/script/DesktopPet.js"></script>
+ *                <script src="https://adrianotiger.github.io/web-esheep/src/esheep.js"></script>
  *                Add this lines in your <body> (at the end if possible):
  *                <script>
-                    var pet = new ESheep();
-                    pet.Start('http://esheep.petrucci.ch/script/animation.xml');
+                    var pet = new eSheep();
+                    pet.Start();
                   </script>
  *                That's all!
  *
@@ -36,6 +36,10 @@
  *                Tested on IE11, Edge and Opera
  *
  * Changelog:
+ *                Version 0.8.0 - 29.05.2018:
+ *                  - Moved animation files to github
+ *                  - Added options to the script 
+ *                  - Load an animation from the GitHub animations from the popup window
  *                Version 0.7.1 - 04.04.2018:
  *                  - Add max-width: none to ensure the image is properly shown
  *                Version 0.7 - 13.11.2017:
@@ -50,9 +54,9 @@
  *                  - still beta versions...
  */
 
-const VERSION = '0.7.1';                // web eSheep version
+const VERSION = '0.8.0';              // web eSheep version
 const ACTIVATE_DEBUG = false;         // show log on console
-const DEFAULT_XML = "http://esheep.petrucci.ch/script/animation.php"; // default XML animation
+const DEFAULT_XML = "https://adrianotiger.github.io/web-esheep/pets/original.xml"; // default XML animation
 const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
 
   /*
@@ -61,9 +65,17 @@ const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisio
    * Once created, you can call [variableName].Start() to start the animation with your desired pet.
    */
 class eSheep
-{
-  constructor(isChild)
+{  
+    /* Parameters for options [default]:
+     * - allowPets: [none], all
+     * - allowPopup: [yes], no
+     */
+  constructor(options, isChild)
   {
+    this.userOptions = options ? options : {allowPets : "none", allowPopup : "yes"};
+    if(!this.userOptions.allowPopup) this.userOptions.allowPopup = "yes";
+    if(!this.userOptions.allowPets) this.userOptions.allowPets = "none";
+        
       // CORS: Cross calls are not accepted by new browsers.
       // This PHP-script allows to call the page also from other domains
     this.animationFile = DEFAULT_XML;
@@ -77,6 +89,7 @@ class eSheep
 
     this.parser = new DOMParser();                  // XML parser
     this.xmlDoc = null;                             // parsed XML Document
+    this.prepareToDie = false;                      // when removed, animations should be stopped
 
     this.isChild = (isChild != null);               // Child will be removed once they reached the end
 
@@ -135,8 +148,12 @@ class eSheep
   }
 
   remove() {
-    this.DOMdiv = this.DOMimg = this.DOMinfo = null;
-    document.getElementById(this.id).outerHTML='';
+    this.prepareToDie = true;
+    this.DOMinfo.Hide();
+    setTimeout(()=>{
+      this.DOMdiv = this.DOMimg = this.DOMinfo = null;
+      document.getElementById(this.id).outerHTML='';
+    }, 500);
   }
 
     /*
@@ -221,6 +238,8 @@ class eSheep
 
         this.DOMdiv.style.left = this.imageX + "px";
         this.DOMdiv.style.top = this.imageY + "px";
+        this.DOMinfo.style.left = parseInt(this.imageX + this.imageW/2) + "px";
+        this.DOMinfo.style.top = this.imageY + "px";
       }
     });
     // Window resized, recalculate eSheep bounds
@@ -251,33 +270,37 @@ class eSheep
       return false;
     });
     // Mouse released
-    this.DOMdiv.addEventListener("mouseup", () => {
+    this.DOMdiv.addEventListener("mouseup", e => {
       if(this.dragging)
       {
         this.dragging = false;
       }
       else if(this.infobox)
       {
-        this.DOMinfo.style.display = "none";
+        this.DOMinfo.Hide();
         this.infobox = false;
       }
       else
       {
-        this.DOMinfo.style.left = Math.min(this.screenW-200, Math.max(0, parseInt(this.imageX + this.imageW/2 - parseInt(this.DOMinfo.style.width)/2))) + "px";
-        this.DOMinfo.style.top = parseInt(this.imageY - parseInt(this.DOMinfo.style.height)) + "px";
-        this.DOMinfo.style.display = "block";
-        this.infobox = true;
+        if(this.userOptions.allowPopup === "yes")
+        {
+          this.DOMinfo.style.left = Math.min(this.screenW-this.imageW, Math.max(this.imageW, parseInt(this.imageX + this.imageW/2))) + "px";
+          this.DOMinfo.style.top = parseInt(this.imageY) + "px";
+          this.DOMinfo.Show();
+          this.infobox = true;
+        }
       }
     });
     // Mouse released over the info box
     this.DOMinfo.addEventListener("mouseup", e => {
-      this.DOMinfo.style.display = "none";
+      this.DOMinfo.Hide();
       this.infobox = false;
     });
       // Create About box
     var attribute =
       "width:200px;" +
       "height:100px;" +
+      "transform:translate(-50%, -50%) scale(0.1);" +
       "position:fixed;" +
       "top:100px;left:10px;" +
       "display:none;" +
@@ -292,26 +315,51 @@ class eSheep
       "opacity:0.9;" +
       "z-index:9999;" +
       "overflow:auto;" +
+      "transition:transform 0.3s ease;" +
       "background: linear-gradient(to bottom right, rgba(128,128,255,0.7), rgba(200,200,255,0.4));";
     this.DOMinfo.setAttribute("style",attribute);
-    var htmlT = document.createElement("b").appendChild(document.createTextNode("eSheep"));
+    var headerNode = this.xmlDoc.getElementsByTagName('header')[0];
+    var htmlT = document.createElement("b").appendChild(document.createTextNode(headerNode.getElementsByTagName('title')[0].textContent));
     var htmlV = document.createElement("sup");
     var htmlL = document.createElement("a");
-    htmlV.appendChild(document.createTextNode("ver: " + VERSION));
-    htmlV.setAttribute("style", "float:right");
-    htmlL.appendChild(document.createTextNode("http://esheep.petrucci.ch"));
-    htmlL.setAttribute("href", "http://esheep.petrucci.ch");
+    var htmlP = document.createElement("p");
+    htmlV.appendChild(document.createTextNode("App v." + VERSION));
+    htmlV.appendChild(document.createElement("br"));
+    htmlV.appendChild(document.createTextNode("Pet v." + headerNode.getElementsByTagName('version')[0].textContent));
+    htmlV.setAttribute("style", "float:right;text-align:right;");
+    htmlL.appendChild(document.createTextNode("\u{1F3E0}"));
+    htmlL.setAttribute("href", "https://github.com/Adrianotiger/web-esheep");
     htmlL.setAttribute("target", "_blank");
-    this.DOMinfo.appendChild(htmlT);
+    htmlL.setAttribute("style", "float:left");
+    htmlP.appendChild(document.createTextNode(headerNode.getElementsByTagName('info')[0].textContent));
+    htmlP.setAttribute("style", "font-size:" + (100 - parseInt(headerNode.getElementsByTagName('info')[0].textContent.length / 10)) + "%;");
     this.DOMinfo.appendChild(htmlV);
+    this.DOMinfo.appendChild(htmlL);
+    if(this.userOptions.allowPets !== "none")
+    {
+      htmlL = document.createElement("a");
+      htmlL.appendChild(document.createTextNode("\u{2699}"));
+      htmlL.setAttribute("href", "javascript:;");
+      htmlL.setAttribute("style", "float:left");
+      this.DOMinfo.appendChild(htmlL);
+      setTimeout(()=>{this._loadPetList(htmlL);},100);
+    }
+    this.DOMinfo.appendChild(htmlT);
     this.DOMinfo.appendChild(document.createElement("br"));
     this.DOMinfo.appendChild(document.createElement("hr"));
-    this.DOMinfo.appendChild(document.createTextNode("Visit the home page of this lovely sheep:"));
-    this.DOMinfo.appendChild(document.createElement("br"));
-    this.DOMinfo.appendChild(htmlL);
+    this.DOMinfo.appendChild(htmlP);
       // Add about and sheep elements to the body
     document.body.appendChild(this.DOMinfo);
     document.body.appendChild(this.DOMdiv);
+        
+    this.DOMinfo.Show = () => {
+      this.DOMinfo.style.display = "block";
+      this.DOMinfo.style.transform = "translate(-50%, -100%) scale(1.0)";
+    }
+    this.DOMinfo.Hide = () => {
+      this.DOMinfo.style.transform = "translate(-50%, -50%) scale(0.1)";
+      setTimeout(()=>{this.DOMinfo.style.display = "none";}, 300);
+    }
   };
 
     /*
@@ -378,7 +426,7 @@ class eSheep
               if(childs[j].getAttribute("animationid") == this.animationId)
               {
                 if(ACTIVATE_DEBUG) console.log("Child from Spawn");
-                var eSheepChild = new eSheep(true);
+                var eSheepChild = new eSheep(null, true);
                 eSheepChild.animationId = childs[j].getElementsByTagName('next')[0].textContent;
                 var x = childs[j].getElementsByTagName('x')[0].textContent;//
                 var y = childs[j].getElementsByTagName('y')[0].textContent;
@@ -510,7 +558,7 @@ class eSheep
         if(childs[k].getAttribute("animationid") == this.animationId)
         {
           if(ACTIVATE_DEBUG) console.log("Child from Animation");
-          var eSheepChild = new eSheep(true);
+          var eSheepChild = new eSheep(null, true);
           eSheepChild.animationId = childs[k].getElementsByTagName('next')[0].textContent;
           var x = childs[k].getElementsByTagName('x')[0].textContent;//
           var y = childs[k].getElementsByTagName('y')[0].textContent;
@@ -581,6 +629,8 @@ class eSheep
      */
   _nextESheepStep()
   {
+    if(this.prepareToDie) return;
+    
     var x1 = this._getNodeValue('start','x',0);
     var y1 = this._getNodeValue('start','y',0);
     var off1 = this._getNodeValue('start','offsety',0);
@@ -768,14 +818,46 @@ class eSheep
       parseInt(del1) + parseInt((del2 - del1) * this.animationStep / steps)
     );
   }
+  
+  /*
+   * Load Pet List from GitHub, so user can change it
+   */
+  _loadPetList(element)
+  {
+    fetch("https://adrianotiger.github.io/web-esheep/pets/pets.json",
+    {
+      credentials: 'same-origin',
+      cache: "force-cache"
+    }).then(response => {
+      return response.json();
+    }).then(json => {
+      console.log(json);
+      if(json.pets)
+      {
+        element.addEventListener("mouseup", e => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          var div = document.createElement("div");
+          div.setAttribute("style", "position:absolute;left:0px;top:20px;width:183px;height:100%;min-height:80px;background:linear-gradient(to bottom, #8080ff, #3030a1);color:yellow;");
+          element.parentNode.appendChild(div);
+          
+          for(let k in json.pets)
+          {
+            var pet = document.createElement("b");
+            pet.setAttribute("style", "cursor:pointer;display:block;");
+            pet.appendChild(document.createTextNode(json.pets[k].name));
+            pet.addEventListener("click", ()=>{
+              var x = new eSheep(this.userOptions);
+              x.Start("https://adrianotiger.github.io/web-esheep/pets/" + json.pets[k].file);
+              this.remove();
+            });
+            div.appendChild(pet);
+          }
+          
+          div.addEventListener("click", e => {element.parentNode.removeChild(div);});
+        });
+      }
+    });
+  }
 };
-
-
-
-
-
-
-
-
-
-
