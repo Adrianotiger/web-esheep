@@ -8,7 +8,7 @@
  * Author:
  *                Adriano Petrucci (http://esheep.petrucci.ch)
  *
- * Version:       0.8.0
+ * Version:       0.9.0
  *
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
@@ -36,6 +36,9 @@
  *                Tested on IE11, Edge and Opera
  *
  * Changelog:
+ *                Version 0.9.0 - 11.07.2019:
+ *                  - Updated animation link to the main project animation
+ *                  - Recompiled with new Yarn version (security vulnerability)
  *                Version 0.8.0 - 29.05.2018:
  *                  - Moved animation files to github
  *                  - Added options to the script 
@@ -56,7 +59,7 @@
 
 const VERSION = '0.8.0';              // web eSheep version
 const ACTIVATE_DEBUG = false;         // show log on console
-const DEFAULT_XML = "https://adrianotiger.github.io/web-esheep/pets/original.xml"; // default XML animation
+const DEFAULT_XML = "https://adrianotiger.github.io/desktopPet/Pets/esheep64/animations.xml"; // default XML animation
 const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
 
   /*
@@ -77,7 +80,6 @@ class eSheep
     if(!this.userOptions.allowPets) this.userOptions.allowPets = "none";
         
       // CORS: Cross calls are not accepted by new browsers.
-      // This PHP-script allows to call the page also from other domains
     this.animationFile = DEFAULT_XML;
 
     this.id = Date.now() + Math.random();
@@ -182,8 +184,6 @@ class eSheep
       this.DOMimg.addEventListener("dragstart", e => {e.preventDefault(); return false;});
       this.imageW = this.sprite.width / this.tilesX;
       this.imageH = this.sprite.height / this.tilesY;
-      //if(typeof this.imageX == 'undefined') this.imageX = 0;
-      //if(typeof this.imageY == 'undefined') this.imageY = this.screenH - this.sprite.height / this.tilesY;
       attribute =
         "width:" + (this.imageW) + "px;" +
         "height:" + (this.imageH) + "px;" +
