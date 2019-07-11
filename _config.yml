@@ -20,7 +20,7 @@ url: "https://adrianotiger.github.io" # the base hostname & protocol for your si
 
 # Build settings
 markdown: kramdown
-#theme: minima
+theme: jekyll-theme-minimal
 #plugins:
 #  - jekyll-feed
 
