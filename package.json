@@ -17,5 +17,8 @@
   },
   "scripts": {
     "build": "gulp build --gulpfile build/gulpfile.js"
+  },
+  "dependencies": {
+    "lodash": "4.17.14"
   }
 }
