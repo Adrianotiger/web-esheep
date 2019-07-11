@@ -57,7 +57,7 @@
  *                  - still beta versions...
  */
 
-const VERSION = '0.8.0';              // web eSheep version
+const VERSION = '0.9.1';              // web eSheep version
 const ACTIVATE_DEBUG = false;         // show log on console
 const DEFAULT_XML = "https://adrianotiger.github.io/desktopPet/Pets/esheep64/animations.xml"; // default XML animation
 const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
@@ -824,7 +824,7 @@ class eSheep
    */
   _loadPetList(element)
   {
-    fetch("https://adrianotiger.github.io/web-esheep/pets/pets.json",
+    fetch("https://adrianotiger.github.io/desktopPet/Pets/pets.json",
     {
       credentials: 'same-origin',
       cache: "force-cache"
@@ -839,17 +839,17 @@ class eSheep
           e.stopPropagation();
           
           var div = document.createElement("div");
-          div.setAttribute("style", "position:absolute;left:0px;top:20px;width:183px;height:100%;min-height:80px;background:linear-gradient(to bottom, #8080ff, #3030a1);color:yellow;");
+          div.setAttribute("style", "position:absolute;left:0px;top:20px;width:183px;min-height:100px;background:linear-gradient(to bottom, #8080ff, #3030a1);color:yellow;");
           element.parentNode.appendChild(div);
           
           for(let k in json.pets)
           {
             var pet = document.createElement("b");
             pet.setAttribute("style", "cursor:pointer;display:block;");
-            pet.appendChild(document.createTextNode(json.pets[k].name));
+            pet.appendChild(document.createTextNode(json.pets[k].folder));
             pet.addEventListener("click", ()=>{
               var x = new eSheep(this.userOptions);
-              x.Start("https://adrianotiger.github.io/web-esheep/pets/" + json.pets[k].file);
+              x.Start("https://adrianotiger.github.io/desktopPet/Pets/" + json.pets[k].file + "/animations.xml");
               this.remove();
             });
             div.appendChild(pet);
