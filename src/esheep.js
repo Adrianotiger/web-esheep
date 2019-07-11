@@ -849,7 +849,7 @@ class eSheep
             pet.appendChild(document.createTextNode(json.pets[k].folder));
             pet.addEventListener("click", ()=>{
               var x = new eSheep(this.userOptions);
-              x.Start("https://adrianotiger.github.io/desktopPet/Pets/" + json.pets[k].file + "/animations.xml");
+              x.Start("https://adrianotiger.github.io/desktopPet/Pets/" + json.pets[k].folder + "/animations.xml");
               this.remove();
             });
             div.appendChild(pet);
