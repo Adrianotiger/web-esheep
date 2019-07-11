@@ -16,7 +16,7 @@
 title: Web eSheep
 description: Web based version of the eSheep (sheep walking on the desktop). Add a sheep to your webpage using this simple script.
 baseurl: "/web-esheep/" # the subpath of your site, e.g. /blog
-url: "https://adrianotiger.github.io/web-esheep/" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://adrianotiger.github.io # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
 markdown: kramdown
