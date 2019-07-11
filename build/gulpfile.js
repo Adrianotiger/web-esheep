@@ -10,8 +10,8 @@ gulp.task("build", function () {
         .pipe(babel({
             presets: ['es2015']
         }))
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
+        .pipe(sourcemaps.init())   /* 
+        .pipe(uglify())            */ 
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('../dist/'));
 });
