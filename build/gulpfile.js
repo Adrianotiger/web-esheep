@@ -8,7 +8,7 @@ gulp.task("build", function () {
     return gulp.src('../src/esheep.js')
         .pipe(rename('esheep.min.js'))
         .pipe(babel({
-            presets: ['es2015']
+            presets: ['@babel/preset-env']
         }))
         .pipe(sourcemaps.init())   /* 
         .pipe(uglify())            */ 

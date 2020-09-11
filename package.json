@@ -9,11 +9,14 @@
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-preset-env": "1.7.0",
+    "camelcase": "6.0.0",
     "gulp": "4.0.2",
     "gulp-babel": "8.0.0",
     "gulp-rename": "2.0.0",
     "gulp-sourcemaps": "2.6.5",
-    "gulp-uglify": "3.0.2"
+    "gulp-uglify": "3.0.2",
+    "object.assign": "4.1.0",
+    "yargs-parser": "19.0.4"
   },
   "scripts": {
     "build": "gulp build --gulpfile build/gulpfile.js"
@@ -23,7 +26,6 @@
     "@babel/preset-env": "^7.11.5",
     "lodash": "4.17.20",
     "lodash.template": "^4.5.0",
-    "minimatch": "3.0.4",
-    "yargs-parser": "19.0.4"
+    "minimatch": "3.0.4"
   }
 }
