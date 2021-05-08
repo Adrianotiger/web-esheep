@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/core": "^7.11.6",
     "@babel/preset-env": "^7.11.5",
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "lodash.template": "^4.5.0",
     "minimatch": "3.0.4"
   }
