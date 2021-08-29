@@ -193,7 +193,8 @@ class eSheep
         "transform:rotatey(0deg);" +
         "cursor:move;" +
         "z-index:2000;" +
-        "overflow:hidden;";
+        "overflow:hidden;" +
+        "image-rendering: crisp-edges;";
       this.DOMdiv.setAttribute("style", attribute);
       this.DOMdiv.appendChild(this.DOMimg);
 
