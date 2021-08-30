@@ -1,4 +1,7 @@
-A list of pets to download.
+<b>This folder is not used anymore!</b>
+All pets are retrieved from the original project:  https://github.com/Adrianotiger/desktopPet/tree/master/Pets  
+You can create and upload your pet on this repository. The new pet will be available to the desktop application, javascripts on browsers and on the mobile phone app.
+
 <h3>Rules:</h3>
 * Everyone can upload their own pet.
 * Only working pets can be uploaded (check them with the application).
