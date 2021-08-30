@@ -1,17 +1,15 @@
 let gulp = require('gulp');
-let rename = require('gulp-rename');
 let babel = require('gulp-babel');
 let sourcemaps = require('gulp-sourcemaps');
-let uglify = require('gulp-uglify');
- 
+let minify = require('gulp-minify');
+
 gulp.task("build", function () {
     return gulp.src('../src/esheep.js')
-        .pipe(rename('esheep.min.js'))
         .pipe(babel({
             presets: ['@babel/preset-env']
         }))
-        .pipe(sourcemaps.init())   /* 
-        .pipe(uglify())            */ 
-        .pipe(sourcemaps.write())
+        .pipe(sourcemaps.init()) 
+        .pipe(minify({ext:{min:'.min.js'},noSource:true}))
+        .pipe(sourcemaps.write('../dist/'))
         .pipe(gulp.dest('../dist/'));
 });
