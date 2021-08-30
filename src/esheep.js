@@ -8,7 +8,7 @@
  * Author:
  *                Adriano Petrucci (http://esheep.petrucci.ch)
  *
- * Version:       0.9.0
+ * Version:       0.9.2
  *
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
@@ -36,6 +36,8 @@
  *                Tested on IE11, Edge and Opera
  *
  * Changelog:
+ *                Version 0.9.2 - 30.08.2021:
+ *                  - crispy stylesheet (pixel image and not antialiased)
  *                Version 0.9.0 - 11.07.2019:
  *                  - Updated animation link to the main project animation
  *                  - Recompiled with new Yarn version (security vulnerability)
@@ -57,7 +59,7 @@
  *                  - still beta versions...
  */
 
-const VERSION = '0.9.1';              // web eSheep version
+const VERSION = '0.9.2';              // web eSheep version
 const ACTIVATE_DEBUG = false;         // show log on console
 const DEFAULT_XML = "https://adrianotiger.github.io/desktopPet/Pets/esheep64/animations.xml"; // default XML animation
 const COLLISION_WITH = ["div", "hr"]; // elements on page to detect for collisions
