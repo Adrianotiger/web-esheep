@@ -6,3 +6,4 @@
 /.yarn
 .yarn*
 node_modules
+.editorconfig
