@@ -23,7 +23,7 @@
   "dependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
-    "glob-parent": "^6.0.2",
+    "glob-parent": "^5.1.2",
     "lodash": "4.17.21",
     "lodash.template": "^4.5.0",
     "minimatch": "5.1.0",
