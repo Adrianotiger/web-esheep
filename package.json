@@ -26,6 +26,6 @@
     "lodash": "4.17.21",
     "lodash.template": "^4.5.0",
     "minimatch": "3.0.4",
-    "npm": "^7.21.1"
+    "npm": "^8.11.0"
   }
 }
