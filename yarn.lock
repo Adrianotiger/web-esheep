@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 4
+  version: 6
   cacheKey: 8
 
 "@ampproject/remapping@npm:^2.1.0":
@@ -31,7 +31,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.18.2, @babel/core@npm:^7.18.2":
+"@babel/core@npm:^7.18.2":
   version: 7.18.2
   resolution: "@babel/core@npm:7.18.2"
   dependencies:
@@ -1582,6 +1582,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn@npm:^8.5.0":
+  version: 8.8.1
+  resolution: "acorn@npm:8.8.1"
+  bin:
+    acorn: bin/acorn
+  checksum: 4079b67283b94935157698831967642f24a075c52ce3feaaaafe095776dfbe15d86a1b33b1e53860fc0d062ed6c83f4284a5c87c85b9ad51853a01173da6097f
+  languageName: node
+  linkType: hard
+
 "agent-base@npm:6, agent-base@npm:^6.0.2":
   version: 6.0.2
   resolution: "agent-base@npm:6.0.2"
@@ -1913,7 +1922,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-core@npm:^6.26.0, babel-core@npm:^6.26.3":
+"babel-core@npm:6.26.3, babel-core@npm:^6.26.0":
   version: 6.26.3
   resolution: "babel-core@npm:6.26.3"
   dependencies:
@@ -2452,7 +2461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-preset-env@npm:^1.7.0":
+"babel-preset-env@npm:1.7.0":
   version: 1.7.0
   resolution: "babel-preset-env@npm:1.7.0"
   dependencies:
@@ -2808,17 +2817,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"camelcase@npm:7.0.0":
+  version: 7.0.0
+  resolution: "camelcase@npm:7.0.0"
+  checksum: 162d59607b3b46e910af151348d5e40af579048a5d07f3c06370b096ca0d42ba4a88bd92cf4e3482645ba1ffdd6f744d8273c1b9594e493fc10883d54adf7cbe
+  languageName: node
+  linkType: hard
+
 "camelcase@npm:^3.0.0":
   version: 3.0.0
   resolution: "camelcase@npm:3.0.0"
   checksum: ae4fe1c17c8442a3a345a6b7d2393f028ab7a7601af0c352ad15d1ab97ca75112e19e29c942b2a214898e160194829b68923bce30e018d62149c6d84187f1673
-  languageName: node
-  linkType: hard
-
-"camelcase@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "camelcase@npm:7.0.0"
-  checksum: 162d59607b3b46e910af151348d5e40af579048a5d07f3c06370b096ca0d42ba4a88bd92cf4e3482645ba1ffdd6f744d8273c1b9594e493fc10883d54adf7cbe
   languageName: node
   linkType: hard
 
@@ -3782,16 +3791,17 @@ fsevents@^1.2.7:
     bindings: ^1.5.0
     nan: ^2.12.1
   checksum: ae855aa737aaa2f9167e9f70417cf6e45a5cd11918e1fee9923709a0149be52416d765433b4aeff56c789b1152e718cd1b13ddec6043b78cdda68260d86383c1
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
 "fsevents@patch:fsevents@^1.2.7#~builtin<compat/fsevents>":
   version: 1.2.13
-  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=1cc4b2"
+  resolution: "fsevents@patch:fsevents@npm%3A1.2.13#~builtin<compat/fsevents>::version=1.2.13&hash=18f3a7"
   dependencies:
     bindings: ^1.5.0
     nan: ^2.12.1
-  checksum: b264407498db2cfdcc2a05287334a4160c985a88e4a989e2f2f8dcc6afc8b04a4fcd82c797266442452e11c1fb07d7747d138b078fe4bb1f8f4fd2a6f2484d7e
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -3983,7 +3993,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"gulp-babel@npm:^8.0.0":
+"gulp-babel@npm:8.0.0":
   version: 8.0.0
   resolution: "gulp-babel@npm:8.0.0"
   dependencies:
@@ -4025,7 +4035,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"gulp-minify@npm:^3.1.0":
+"gulp-minify@npm:3.1.0":
   version: 3.1.0
   resolution: "gulp-minify@npm:3.1.0"
   dependencies:
@@ -4039,7 +4049,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"gulp-sourcemaps@npm:^3.0.0":
+"gulp-sourcemaps@npm:3.0.0":
   version: 3.0.0
   resolution: "gulp-sourcemaps@npm:3.0.0"
   dependencies:
@@ -4058,7 +4068,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"gulp@npm:^4.0.2":
+"gulp@npm:4.0.2":
   version: 4.0.2
   resolution: "gulp@npm:4.0.2"
   dependencies:
@@ -5054,7 +5064,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+"lodash@npm:4.17.21, lodash@npm:^4.17.4":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -5219,6 +5229,15 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"minimatch@npm:3.0.5":
+  version: 3.0.5
+  resolution: "minimatch@npm:3.0.5"
+  dependencies:
+    brace-expansion: ^1.1.7
+  checksum: a3b84b426eafca947741b864502cee02860c4e7b145de11ad98775cfcf3066fef422583bc0ffce0952ddf4750c1ccf4220b1556430d4ce10139f66247d87d69e
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.1.1":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -5228,7 +5247,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
+"minimatch@npm:^5.0.1":
   version: 5.1.0
   resolution: "minimatch@npm:5.1.0"
   dependencies:
@@ -5801,7 +5820,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"object.assign@npm:^4.0.4, object.assign@npm:^4.1.0, object.assign@npm:^4.1.2":
+"object.assign@npm:4.1.2, object.assign@npm:^4.0.4, object.assign@npm:^4.1.0":
   version: 4.1.2
   resolution: "object.assign@npm:4.1.2"
   dependencies:
@@ -6592,14 +6611,14 @@ fsevents@^1.2.7:
 
 "resolve@patch:resolve@^1.1.6#~builtin<compat/resolve>, resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.4.0#~builtin<compat/resolve>":
   version: 1.22.0
-  resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=00b1ff"
+  resolution: "resolve@patch:resolve@npm%3A1.22.0#~builtin<compat/resolve>::version=1.22.0&hash=07638b"
   dependencies:
     is-core-module: ^2.8.1
     path-parse: ^1.0.7
     supports-preserve-symlinks-flag: ^1.0.0
   bin:
     resolve: bin/resolve
-  checksum: b63b73ecbb7928e71c30e231f6adc380fca66bd5819a1b1324d3dcae573c726d9923df06eef3ac50be52b1dcea67272f3b6f12ba2e87ec8a9d3ebdf8454103bb
+  checksum: c79ecaea36c872ee4a79e3db0d3d4160b593f2ca16e031d8283735acd01715a203607e9ded3f91f68899c2937fa0d49390cddbe0fb2852629212f3cda283f4a7
   languageName: node
   linkType: hard
 
@@ -7539,20 +7558,20 @@ fsevents@^1.2.7:
   dependencies:
     "@babel/core": ^7.18.2
     "@babel/preset-env": ^7.18.2
-    babel-core: ^6.26.3
-    babel-preset-env: ^1.7.0
-    camelcase: ^7.0.0
+    babel-core: 6.26.3
+    babel-preset-env: 1.7.0
+    camelcase: 7.0.0
     glob-parent: ^6.0.2
-    gulp: ^4.0.2
-    gulp-babel: ^8.0.0
-    gulp-minify: ^3.1.0
-    gulp-sourcemaps: ^3.0.0
-    lodash: ^4.17.21
+    gulp: 4.0.2
+    gulp-babel: 8.0.0
+    gulp-minify: 3.1.0
+    gulp-sourcemaps: 3.0.0
+    lodash: 4.17.21
     lodash.template: ^4.5.0
-    minimatch: ^5.1.0
+    minimatch: 3.0.5
     npm: ^8.12.1
-    object.assign: ^4.1.2
-    yargs-parser: ^21.0.1
+    object.assign: 4.1.2
+    yargs-parser: 21.0.1
   languageName: unknown
   linkType: soft
 
@@ -7642,7 +7661,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.0.1":
+"yargs-parser@npm:21.0.1":
   version: 21.0.1
   resolution: "yargs-parser@npm:21.0.1"
   checksum: c3ea2ed12cad0377ce3096b3f138df8267edf7b1aa7d710cd502fe16af417bafe4443dd71b28158c22fcd1be5dfd0e86319597e47badf42ff83815485887323a
