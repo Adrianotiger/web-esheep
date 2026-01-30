@@ -24,7 +24,7 @@
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "glob-parent": "^6.0.2",
-    "lodash": "4.17.21",
+    "lodash": "4.17.23",
     "lodash.template": "^4.5.0",
     "minimatch": "9.0.3",
     "npm": "^10.2.1"
