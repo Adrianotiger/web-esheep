@@ -18,6 +18,10 @@ sheep.Start();
 </body>
 ```
 
+### Ready to start with your Minecraft Mate?
+[https://adrianotiger.github.io/web-esheep/tools/minecraft.html](https://adrianotiger.github.io/web-esheep/tools/minecraft.html)
+Generate a spritesheet with a few clicks and generate your Mate with other 2 klicks :D
+
 
 ### And now?
 Check out the demo, to see how integrate it in your webpage:
@@ -33,7 +37,8 @@ Do you have Firefox, Chrome, Opera or Edge? Add this sheep to Google and Bing se
 The most recent browsers doesn't allows cross requests over Javascript. So the script and the animation xml have to be on the same server. If you want load an xml from esheep, you have to insert the php script instead of the xml (it will create some special headers, so that the xml will be loaded).
 
 ### Credits
-**Tatsutoshi Nomura** is the creator of the esheep and designed it for Fuji Television. This is only a copy, using some images found in the web.
+**Tatsutoshi Nomura** is the creator of the esheep and designed it for Fuji Television. This is only a copy, using some images found in the web.  
+**RedSparr0w** for the nice pets and helping me with the spritesheets for Minecraft
 
 # Build GitHub project
 eSheep uses `yarn` to build it.  

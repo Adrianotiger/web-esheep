@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minecraft pet generator</title>
+    <script src="../src/esheep.js"></script>
+    <script src="minecraft/generator.js"></script>
+    <script src="minecraft/png2ico.js"></script>
+    <style>
+      html { height: 100% }
+      body { height: 100%; margin: 0px; }
+    </style>
+  </head>
+  <body style='text-align:center;margin:0 auto;' ondragover='pagedragover(event)' ondrop='pagedrop(event)' ondragleave='pagedragend(event)'>
+    <p>Create Minecraft mates for the desktop app and for the browser, using a spritesheet generator.</p>
+    Steps:
+    <img src="minecraft/chibi-steve-spritesheet.png" style="height:500px;float:right;">
+    <ol style="text-align:left;">
+        <li>Create your spritesheet, using: <a href="https://nogard.dev/tools/minecraft-chibi-skin-maker">https://nogard.dev/tools/minecraft-chibi-skin-maker</a> - It should be like the one on this page:</li>
+        <li>Edit ONLY Skin and Look (as we don't need a gif or special camera positions)</li>
+        <li>Export it as "Spritesheet"</li>
+        <li>Unpack the ZIP</li>
+        <li>Drop the <i>spritesheet.png</i> on this page</li>
+        <li>Download the <i>animation.xml</i> or test it directly on this page</li>
+    </ol>
+    <table style="width:90%;margin:0 auto;" border="2">
+        <tr>
+            <th>Step 1<br>(Drag PNG)</th><th>Step 2<br>Create Mate</th><th>Step 3<br>Download xml</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <p>Author: <input id="author" value="Generator" /></p>
+                <p>Pet Name: <input id="petname" value="TestMate" /></p>
+                <p>Description: <input id="info" value="Description of the pet" /></p>
+                <button disabled onclick="generatePet();">Generate Mate</button>
+            </td>
+            <td>
+                <button disabled onclick="downloadPet();">Download XML</button>
+            </td>
+        </tr>
+    </table>
+  </body>
+</html>
