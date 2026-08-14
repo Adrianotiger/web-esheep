@@ -18,16 +18,14 @@ sheep.Start();
 </body>
 ```
 
-### Ready to start with your Minecraft Mate?
-[https://adrianotiger.github.io/web-esheep/tools/minecraft.html](https://adrianotiger.github.io/web-esheep/tools/minecraft.html)
+### NEW: Ready to start with your Minecraft Mate?
+[https://adrianotiger.github.io/web-esheep/tools/minecraft.html](https://adrianotiger.github.io/web-esheep/tools/minecraft.html)  
 Generate a spritesheet with a few clicks and generate your Mate with other 2 klicks :D
 
 
 ### And now?
 Check out the demo, to see how integrate it in your webpage:
 [https://adrianotiger.github.io/web-esheep/samples/](https://adrianotiger.github.io/web-esheep/samples/)
-
-If you want create your animation, you can use the editor or find some other already-created animations on my webpage: [ehseep.petrucci.ch](http://esheep.petrucci.ch)
 
 ### Tampermonkey script
 Do you have Firefox, Chrome, Opera or Edge? Add this sheep to Google and Bing search machines over this simple Tampermonkey script:
@@ -40,9 +38,3 @@ The most recent browsers doesn't allows cross requests over Javascript. So the s
 **Tatsutoshi Nomura** is the creator of the esheep and designed it for Fuji Television. This is only a copy, using some images found in the web.  
 **RedSparr0w** for the nice pets and helping me with the spritesheets for Minecraft
 
-# Build GitHub project
-eSheep uses `yarn` to build it.  
-### Set up build environment  
-`yarn install --dev`  
-### Build the files in `dist`
-`yarn build`
