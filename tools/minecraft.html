@@ -13,18 +13,35 @@
   <body style='text-align:center;margin:0 auto;' ondragover='pagedragover(event)' ondrop='pagedrop(event)' ondragleave='pagedragend(event)'>
     <p>Create Minecraft mates for the desktop app and for the browser, using a spritesheet generator.</p>
     Steps:
-    <img src="minecraft/chibi-steve-spritesheet.png" style="height:500px;float:right;">
     <ol style="text-align:left;">
-        <li>Create your spritesheet, using: <a href="https://nogard.dev/tools/minecraft-chibi-skin-maker">https://nogard.dev/tools/minecraft-chibi-skin-maker</a> - It should be like the one on this page:</li>
-        <li>Edit ONLY Skin and Look (as we don't need a gif or special camera positions)</li>
-        <li>Export it as "Spritesheet"</li>
-        <li>Unpack the ZIP</li>
-        <li>Drop the <i>spritesheet.png</i> on this page</li>
-        <li>Download the <i>animation.xml</i> or test it directly on this page</li>
+      <li>Create Spritesheet with the NOGARD generator
+        <ol>
+          <li>Create your spritesheet, using: <a target="_blank" href="https://nogard.dev/tools/minecraft-chibi-skin-maker">https://nogard.dev/tools/minecraft-chibi-skin-maker</a> - It should be like the one on this page:</li>
+          <li>Edit ONLY Skin and Look (as we don't need a gif or special camera positions)</li>
+          <li>Export it as "Spritesheet"</li>
+          <li>Unpack the ZIP</li>
+          <li>Drop the <i>spritesheet.png</i> on this page</li>
+        </ol>
+      </li>
+      <li>Configure and edit the spritesheet if you want</li>
+      <li>Download the <i>animation.xml</i> or test it directly on this page</li>
     </ol>
-    <table style="width:90%;margin:0 auto;" border="2">
+    <hr>
+    <div style="display:inline-block;width:45vw;">
+      <h2>Step 1 - Upload PNG</h2>
+      <canvas style=""></canvas>
+    </div>
+    <div style="display:inline-block;width:30vw;" id="divoptions">
+      <h2>Step 2 - Sprite Options</h2>
+      Add pixels left 0px<input type="range" min="0" max="9" value="0" onchange="editCanvas()">9px<br>
+      Add pixels right 0px<input type="range" min="0" max="9" value="0" onchange="editCanvas()">9px<br>
+      Resize 1x<input type="range" min="1" max="4" value="1" onchange="editCanvas()">4x<br>
+    </div>
+    <hr>
+    <h2>Step 3 - Test and Generate XML</h2>
+    <table style="width:90%;margin:0 auto;" border="2" id="tablegen">
         <tr>
-            <th>Step 1<br>(Drag PNG)</th><th>Step 2<br>Create Mate</th><th>Step 3<br>Download xml</th>
+            <th>Your icon</th><th>Create Mate</th><th>Download XML</th>
         </tr>
         <tr>
             <td></td>
