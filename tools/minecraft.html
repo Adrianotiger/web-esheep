@@ -5,56 +5,77 @@
     <script src="../src/esheep.js"></script>
     <script src="minecraft/generator.js"></script>
     <script src="minecraft/png2ico.js"></script>
-    <style>
-      html { height: 100% }
-      body { height: 100%; margin: 0px; }
-    </style>
+    <link href="minecraft/minecraft.css" rel="stylesheet" />
   </head>
   <body style='text-align:center;margin:0 auto;' ondragover='pagedragover(event)' ondrop='pagedrop(event)' ondragleave='pagedragend(event)'>
-    <p>Create Minecraft mates for the desktop app and for the browser, using a spritesheet generator.</p>
-    Steps:
-    <ol style="text-align:left;">
-      <li>Create Spritesheet with the NOGARD generator
-        <ol>
-          <li>Create your spritesheet, using: <a target="_blank" href="https://nogard.dev/tools/minecraft-chibi-skin-maker">https://nogard.dev/tools/minecraft-chibi-skin-maker</a> - It should be like the one on this page:</li>
-          <li>Edit ONLY Skin and Look (as we don't need a gif or special camera positions)</li>
-          <li>Export it as "Spritesheet"</li>
-          <li>Unpack the ZIP</li>
-          <li>Drop the <i>spritesheet.png</i> on this page</li>
-        </ol>
-      </li>
-      <li>Configure and edit the spritesheet if you want</li>
-      <li>Download the <i>animation.xml</i> or test it directly on this page</li>
-    </ol>
-    <hr>
-    <div style="display:inline-block;width:45vw;">
-      <h2>Step 1 - Upload PNG</h2>
-      <canvas style=""></canvas>
+    <h2>Create Minecraft mates for the desktop app and for the browser, using a spritesheet generator.</h2>
+
+    <div class="box">
+      <h1>Step 1</h1>
+      <p style="font-size:120%;">
+      Go to<br>
+      <a target="_blank" href="https://nogard.dev/tools/minecraft-chibi-skin-maker">https://nogard.dev/tools/ minecraft-chibi-skin-maker</a><br>
+      and generate the spritesheet.
+      </p>
+      <i>Edit ONLY <b>Skin</b> and <b>Look</b> (as we don't need a gif or special camera positions)</i>
     </div>
-    <div style="display:inline-block;width:30vw;" id="divoptions">
-      <h2>Step 2 - Sprite Options</h2>
-      Add pixels left 0px<input type="range" min="0" max="9" value="0" onchange="editCanvas()">9px<br>
-      Add pixels right 0px<input type="range" min="0" max="9" value="0" onchange="editCanvas()">9px<br>
-      Resize 1x<input type="range" min="1" max="4" value="1" onchange="editCanvas()">4x<br>
+
+    <div class="box">
+      <h1>Step 2</h1>
+      <p style="font-size:120%;">
+      <ol>
+        <li>Export it as "Spritesheet"</li>
+        <li>Unpack the ZIP</li>
+        <li>Drop the <i>spritesheet.png</i> on this page</li>
+      </ol>
+      Here a preview:
+      </p>
+      <canvas style="width:18vw;left:1vw;"></canvas>
     </div>
-    <hr>
-    <h2>Step 3 - Test and Generate XML</h2>
-    <table style="width:90%;margin:0 auto;" border="2" id="tablegen">
-        <tr>
-            <th>Your icon</th><th>Create Mate</th><th>Download XML</th>
-        </tr>
+
+    <div class="box">
+      <h1>Step 3</h1>
+      <p style="font-size:120%;">
+      See preview on this page.
+      </p>
+      Configure the mate with the options you want.<br><br>
+      <div style="display:block;width:100%;" id="divoptions">
+        Resize <br>1x <input type="range" min="1" max="4" value="1" onchange="editCanvas()" style="width:12vw;"> 4x<br>
+      </div>
+      <table style="width:100%;margin:0 auto;" border="0" id="tablegen">
         <tr>
             <td></td>
             <td>
-                <p>Author: <input id="author" value="Generator" /></p>
-                <p>Pet Name: <input id="petname" value="TestMate" /></p>
-                <p>Description: <input id="info" value="Description of the pet" /></p>
-                <button disabled onclick="generatePet();">Generate Mate</button>
-            </td>
-            <td>
-                <button disabled onclick="downloadPet();">Download XML</button>
+                <p>Author: <input type="text" id="author" value="Generator" /></p>
+                <p>Pet Name: <input type="text" id="petname" value="TestMate" /></p>
+                <p>Description: <input type="text" id="info" value="Description of the pet" /></p>
             </td>
         </tr>
-    </table>
+      </table>
+    </div>
+
+    <div class="box">
+      <h1>Step 4</h1>
+      <p style="font-size:120%;">
+      Download your animation file.
+      </p>
+      Export the animation.xml and drop it to your windows Pet to see it in action directly on your windows.
+      <br>
+      <button disabled onclick="generatePet();">Test Mate</button>
+      <br>
+      <br>
+      <button disabled onclick="downloadPet();">Download XML</button>
+    </div>
+
+    <br><br><br><br><br><br>
+    <hr style="width:50%;">
+    
+    <script>
+      setTimeout(()=>{
+        const xmlStart = myMate.mergeFiles();
+        const pet = new eSheep();
+        pet.Start(xmlStart); 
+      }, 1000);
+    </script>
   </body>
 </html>

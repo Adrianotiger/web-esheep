@@ -5,7 +5,7 @@
  *                04.april 2018
  *
  * @author        Adriano Petrucci (https://github.com/Adrianotiger/desktopPet)
- * @version       1.0.0
+ * @version       1.0.1
  *
  * Introduction:
  *                As "wrapper" for the OpenSource C# project
@@ -32,6 +32,8 @@
  *                Browser (ES2020)
  * 
  * Changelog:
+ *                Version 1.0.1 - 15.10.2026:
+ *                  - improved collision detection
  *                Version 1.0.0 - 14.08.2026:
  *                  - Update to new ES
  *                  - remove yarn build as it continue to give security issues on github
@@ -589,28 +591,27 @@ class eSheep
     const x = this.imageX;
     const y = this.imageY + this.imageH;
     let rect;
-    const margin = 20;
+    let margin = 20;
     if(this.HTMLelement) margin = 5;
     let collided = null;
     this.#userOptions.collisions.forEach(els =>
     {
-      if(collided) return;
-      for(let i=0;i<els.length;i++)
-      {
-        rect = els[i].getBoundingClientRect();
+      if(collided != null) return;
+      [...document.getElementsByTagName(els)].forEach(el=>{
+        rect = el.getBoundingClientRect();
 
         if(y > rect.top - 2 && y < rect.top + margin)
         {
           if(x > rect.left && x < rect.right - this.imageW)
           {
-            const style = window.getComputedStyle(els[i]);
+            const style = window.getComputedStyle(el);
             if((style.borderTopStyle != "" && style.borderTopStyle != "none") && style.display != "none")
             {
-              collided = els[i];
+              collided = el;
             }
           }
         }
-      }
+      });
     });
     return collided;
   }

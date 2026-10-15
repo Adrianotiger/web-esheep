@@ -1,0 +1,215 @@
+html 
+{ 
+    height: 100% 
+}
+body 
+{ 
+    height: 100%; 
+    margin: 0px; 
+    background: url(minecraftbg.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center center;
+    font-family: "Courier New", monospace;
+}
+
+
+.box {
+    display: inline-block;
+    vertical-align: top;
+
+    width: 20vw;
+    height: 30vh;
+    box-sizing: border-box;
+
+    background: #d7e8c5;
+    color: #263d1b;
+
+    border: 4px solid #4a6735;
+    border-radius: 0;
+
+    box-shadow:
+        inset 0 4px 0 rgba(255, 255, 255, 0.35),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.10),
+        6px 6px 0 rgba(38, 61, 27, 0.65);
+
+    font-family: "Courier New", monospace;
+    image-rendering: pixelated;
+    overflow: auto;
+}
+
+/* Optional heading inside the box */
+.box h1 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+/* Optional hover effect */
+.box:hover {
+    border-color: #72a34c;
+}
+
+/*
+.box
+{
+    display: inline-block;
+    width: 20vw;
+    height: 30vh;
+    border: ridge 2px black;
+    border-radius: 10px;
+    vertical-align: top;
+}*/
+
+.box h1
+{
+    width: 100%;
+    display: block;
+    height: 5vh;
+    background: white;
+    margin: 0px;
+    border-radius: 10px;
+    line-height: 5vh;
+}
+
+
+button {
+    background: #72b834;
+    color: #ffffff;
+    border: 3px solid #263d1b;
+    border-radius: 0;
+    padding: 12px 24px;
+
+    font-family: "Courier New", monospace;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    box-shadow:
+        inset 0 3px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.18),
+        0 4px 0 #263d1b;
+
+    cursor: pointer;
+    image-rendering: pixelated;
+    transition: transform 80ms, box-shadow 80ms;
+}
+
+button:hover {
+    background: #8bd344;
+    filter: brightness(1.05);
+}
+
+button:active {
+    transform: translateY(4px);
+    box-shadow:
+        inset 0 3px 0 rgba(0, 0, 0, 0.12),
+        0 0 0 #263d1b;
+}
+
+button:disabled {
+    background: #777777;
+    color: #cccccc;
+    border-color: #444444;
+    box-shadow: 0 4px 0 #333333;
+    cursor: not-allowed;
+    filter: none;
+}
+
+
+/* Minecraft-style text input */
+input[type="text"] {
+    box-sizing: border-box;
+    width: 80%;
+    padding: 10px 12px;
+
+    background: #e8f0df;
+    color: #263d1b;
+
+    border: 3px solid #4a6735;
+    border-radius: 0;
+    outline: none;
+
+    box-shadow:
+        inset 3px 3px 0 rgba(0, 0, 0, 0.12),
+        0 3px 0 rgba(38, 61, 27, 0.35);
+
+    font-family: "Courier New", monospace;
+    font-size: 16px;
+}
+
+input[type="text"]::placeholder {
+    color: #7b8c6d;
+}
+
+input[type="text"]:focus {
+    background: #f5faef;
+    border-color: #72b834;
+    box-shadow:
+        inset 3px 3px 0 rgba(0, 0, 0, 0.08),
+        0 0 0 2px rgba(114, 184, 52, 0.25);
+}
+
+
+/* Minecraft-style range slider */
+input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 100%;
+    height: 18px;
+    margin: 12px 0;
+
+    background: #526448;
+    border: 3px solid #263d1b;
+    border-radius: 0;
+
+    box-shadow:
+        inset 0 3px 0 rgba(0, 0, 0, 0.2),
+        0 3px 0 rgba(38, 61, 27, 0.35);
+
+    cursor: pointer;
+}
+
+/* Chrome, Edge, Safari: slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 24px;
+    height: 30px;
+
+    background: #72b834;
+    border: 3px solid #263d1b;
+    border-radius: 0;
+
+    box-shadow:
+        inset 0 3px 0 rgba(255, 255, 255, 0.25),
+        inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+        3px 3px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Firefox: slider thumb */
+input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 24px;
+
+    background: #72b834;
+    border: 3px solid #263d1b;
+    border-radius: 0;
+
+    box-shadow:
+        inset 0 3px 0 rgba(255, 255, 255, 0.25),
+        3px 3px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Keyboard accessibility */
+input[type="range"]:focus-visible,
+input[type="text"]:focus-visible {
+    outline: 2px dashed #72b834;
+    outline-offset: 4px;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+    background: #8bd344;
+}

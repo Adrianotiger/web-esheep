@@ -45,7 +45,9 @@ let myMate = new class
 
         const w = this.#image.width;
         const h = this.#image.height;
-        const f = parseInt(inputs[2].value);
+        const f = parseInt(inputs[0].value);
+        const fs = parseInt(15*f*1.2);
+        console.log(fs);
 
         canvas.width = this.#image.width * f;
         canvas.height = this.#image.height * f;
@@ -53,48 +55,18 @@ let myMate = new class
         ctx.clearRect(0, 0, w*f, h*f);
         ctx.imageSmoothingEnabled = false;
         ctx.drawImage(this.#image, 0, 0, w*f, h*f);
-        if(inputs[0].value > 0)
-        {
-            ctx.strokeStyle = "red";
-            ctx.lineWidth = 1;
-            for(let j=0;j<this.#CONST.COLS;j++)
-            {
-                for(let k=0;k<inputs[0].value;k++)
-                {
-                    ctx.beginPath();
-                    ctx.moveTo(j*(w*f / this.#CONST.COLS)+k, 0);
-                    ctx.lineTo(j*(w*f / this.#CONST.COLS)+k, h*f);
-                    ctx.stroke();
-                }
-            }
-        }
-        if(inputs[1].value > 0)
-        {
-            ctx.strokeStyle = "red";
-            ctx.lineWidth = 1;
-            for(let j=0;j<this.#CONST.COLS;j++)
-            {
-                for(let k=0;k<inputs[1].value;k++)
-                {
-                    ctx.beginPath();
-                    ctx.moveTo((j+1)*(w*f / this.#CONST.COLS)-k - 1, 0);
-                    ctx.lineTo((j+1)*(w*f / this.#CONST.COLS)-k - 1, h*f);
-                    ctx.stroke();
-                }
-            }
-        }
-
+        ctx.font = fs + "px bold Courier New";
+        
         this.#pngRaw = canvas.toDataURL();
 
         ["Icon", "Idle", "Walk", "Run", "Skip", "Jump", "Wave", "Nod", "Head", "Clap", "Cheer", "Sulk", "Joy", "Surp.", "Bow", "Bounce", "Dance", "Shiver", "Turn", "Spin"].forEach((a, j)=>{
-            ctx.fillText(a, w*f-5-(5*a.length), j*h*f/this.#CONST.ROWS+15);
+            ctx.fillText(a, w*f-5-(5*a.length)*(f*2), j*h*f*1.2/this.#CONST.ROWS+15*f);
         });
     }
 
     createImages(file)
     {
-        const td0 = document.getElementsByTagName("table")[0].getElementsByTagName("td")[0];
-        const td1 = document.getElementsByTagName("table")[0].getElementsByTagName("td")[1];        
+        const td0 = document.getElementsByTagName("table")[0].getElementsByTagName("td")[0];     
         td0.innerHTML = "";
 
         const canvasIco = document.createElement("canvas");
@@ -112,7 +84,7 @@ let myMate = new class
 
             this.#icon = canvasIco.toDataURL("image/png");
 
-            td1.getElementsByTagName("button")[0].disabled = false;
+            document.getElementsByTagName("button")[1].disabled = false;
 
             canvasIco.toBlob(blob=>{
                 //const blob2 = PngIcoConverter.toBlob(blob, "image/png");
@@ -128,7 +100,7 @@ let myMate = new class
             }, "image/png");
         };
 
-        console.log(file.substring(file.indexOf(",")+1));
+        //console.log(file.substring(file.indexOf(",")+1));
     }
 
     loadFile(file)
@@ -151,8 +123,7 @@ let myMate = new class
         this.#xml = this.#xml.replace("-IBBB-", inputs[1].value + " - Minecraft");
         this.#xml = this.#xml.replace("-ICCC-", inputs[1].value);
         this.#xml = this.#xml.replace("-IDDD-", inputs[2].value);
-        const td2 = document.getElementsByTagName("table")[0].getElementsByTagName("td")[2];
-        td2.getElementsByTagName("button")[0].disabled = false;
+        document.getElementsByTagName("button")[0].disabled = false;
         return this.#xml;
     }
 
