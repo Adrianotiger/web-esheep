@@ -21,7 +21,7 @@ sheep.Start();
 ### NEW: Ready to start with your Minecraft Mate?
 [https://adrianotiger.github.io/web-esheep/tools/minecraft.html](https://adrianotiger.github.io/web-esheep/tools/minecraft.html)  
 Generate a spritesheet with a few clicks and generate your Mate with other 2 klicks :D
-
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/3e1efd1e-a72d-4fa8-ba1e-b268beba3838" />
 
 ### And now?
 Check out the demo, to see how integrate it in your webpage:
