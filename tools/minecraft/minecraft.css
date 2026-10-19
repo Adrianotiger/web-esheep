@@ -213,3 +213,43 @@ input[type="text"]:focus-visible {
 input[type="range"]:active::-webkit-slider-thumb {
     background: #8bd344;
 }
+
+.downloaddiv
+{
+    display:block;
+    width:722px;
+    height:300px;
+    position:absolute;
+    right:0px;
+    bottom:0px;
+    background-image:url(dragxml.png);
+    color: #263d1b;
+    font-family: "Courier New", monospace;
+    image-rendering: pixelated;
+    text-align:left;
+}
+
+.downloaddiv img
+{
+    position: absolute;
+    left: 291px;
+    top: 70px;
+    opacity: 0.0;
+    cursor: grab;
+    transition: opacity linear 0.2s;
+}
+
+.downloaddiv:hover img
+{
+    opacity: 1.0;
+}
+
+.downloaddiv span
+{
+  display:inline-block;
+  font-size:110%;
+  width:200px;
+  height: 230px;
+  margin-top:90px;
+  margin-left:40px;
+}

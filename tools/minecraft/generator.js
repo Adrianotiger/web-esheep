@@ -133,12 +133,29 @@ let myMate = new class
         let burl = URL.createObjectURL(b);
         return burl;
     }
+
+    startDrag(e)
+    {
+        e.dataTransfer.setData(
+            "text/plain",
+            `${this.#xml}`
+        );
+
+        e.dataTransfer.setData("text/xml", this.#xml);
+        e.dataTransfer.effectAllowed = "copy";
+    }
 };
 
 function pagedragover(event)
 {
     document.body.style.opacity = 0.2;
     event.preventDefault();
+    if (event.dataTransfer.types.includes('Files')) {
+        event.dataTransfer.dropEffect = 'copy';
+    } 
+    else {
+        event.dataTransfer.dropEffect = 'none';
+    }
 }
 
 function pagedragend(event)
@@ -153,7 +170,14 @@ function pagedrop(event)
     event.preventDefault();
     if(event.dataTransfer.items[0])
     {
-        myMate.loadFile(event.dataTransfer.items[0].getAsFile());
+        try
+        {
+            myMate.loadFile(event.dataTransfer.items[0].getAsFile());
+        }
+        catch(ex)
+        {
+            console.error("Invalid file: ", ex);
+        }
     }
 }
 

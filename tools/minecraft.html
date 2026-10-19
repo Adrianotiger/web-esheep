@@ -62,13 +62,18 @@
       Export the animation.xml and drop it to your windows Pet to see it in action directly on your windows.
       <br>
       <button disabled onclick="generatePet();">Test Mate</button>
-      <br>
-      <br>
-      <button disabled onclick="downloadPet();">Download XML</button>
     </div>
 
     <br><br><br><br><br><br>
     <hr style="width:50%;">
+
+    <div class="downloaddiv">
+      <span>
+        Drag the XML outside your browser, directly over your pet<br><br>
+        <button disabled onclick="downloadPet();">Download XML</button>
+      </span>
+      <img src="minecraft/dragout.png" ondragstart="myMate.startDrag(event);" />
+    </div>
     
     <script>
       setTimeout(()=>{
